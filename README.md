@@ -1,19 +1,19 @@
 # 4600FinalProject
 
-Alice Key Gen
-openssl genpkey -algorithm RSA -out alice_private.pem -aes256
-openssl rsa -pubout -in alice_private.pem -out alice_public.pem
+# Generate Alice's private key
+openssl genpkey -algorithm RSA -out alice_private_key.pem
 
-Bob Key Gen
-openssl genpkey -algorithm RSA -out bob_private.pem -aes256
-openssl rsa -pubout -in bob_private.pem -out bob_public.pem
+# Extract Alice's public key
+openssl rsa -pubout -in alice_private_key.pem -out alice_public_key.pem
 
-Encrypt AES
-openssl rand -base64 32 > aes_key.txt
+# Generate Bob's private key
+openssl genpkey -algorithm RSA -out bob_private_key.pem
 
-Encrypt Alices Message
-openssl enc -aes-256-cbc -in alice_message.txt -out alice_encrypted.txt -pass file:aes_key.txt
+# Extract Bob's public key
+openssl rsa -pubout -in bob_private_key.pem -out bob_public_key.pem
 
-Encrypt Bobs Message
-openssl enc -aes-256-cbc -in bob_message.txt -out bob_encrypted.txt -pass file:aes_key.txt
+
+
+
+
 
