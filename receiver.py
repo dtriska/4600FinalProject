@@ -41,34 +41,6 @@ with open("private_key.pem", "rb") as private_key_file:
         backend=default_backend()
     )
 
-# Load transmitted data from separate files
-# with open("Transmitted_IV.txt", "rb") as file:
-#     iv = file.read()
-
-# with open("Transmitted_Encrypted_AES_Key.txt", "rb") as file:
-#     encrypted_aes_key = file.read()
-
-# with open("Transmitted_Encrypted_Message.txt", "rb") as file:
-#     encrypted_message = file.read()
-
-# with open("Transmitted_HMAC_Tag.txt", "rb") as file:
-#     hmac_tag = file.read()
-
-# with open("Transmitted_HMAC_Key.txt", "rb") as file:
-#     hmac_key = file.read()  # Read the HMAC key from the file
-
-
-# # Decrypt AES key with RSA
-# aes_key = decrypt_aes_key_with_rsa(encrypted_aes_key, private_key)
-
-# # Verify HMAC
-# if verify_hmac(hmac_key, encrypted_message + iv + encrypted_aes_key, hmac_tag):
-#     # Decrypt message with AES
-#     decrypted_message = decrypt_message_with_aes(encrypted_message, iv, aes_key)
-#     print("Decrypted Message:", decrypted_message.decode())
-# else:
-#     print("HMAC verification failed. Data may have been tampered with.")
-
 # Load transmitted data from the single file
 with open("Transmitted_Data.txt", "rb") as file:
     transmitted_data = file.read()
