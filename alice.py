@@ -1,4 +1,6 @@
 import os
+import json
+import base64
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import hmac
@@ -66,6 +68,23 @@ encrypted_aes_key = encrypt_rsa(aes_key, bob_public_key)
 mac_key = os.urandom(32)
 mac = compute_mac(encrypted_message, mac_key)
 
-# Write encrypted message, encrypted AES key, and MAC to file
-with open("Transmitted_Data", "wb") as file:
-    file.write(iv + encrypted_message + encrypted_aes_key + mac)
+# Encode bytes objects as base64 strings
+iv_b64 = base64.b64encode(iv).decode()
+encrypted_message_b64 = base64.b64encode(encrypted_message).decode()
+encrypted_aes_key_b64 = base64.b64encode(encrypted_aes_key).decode()
+mac_b64 = base64.b64encode(mac).decode()
+
+# Create a dictionary to store the components
+transmitted_data = {
+    "iv": iv_b64,
+    "encrypted_message": encrypted_message_b64,
+    "encrypted_aes_key": encrypted_aes_key_b64,
+    "mac": mac_b64
+}
+
+# Serialize the dictionary to JSON
+transmitted_data_json = json.dumps(transmitted_data)
+
+# Write the JSON data to the file
+with open("Transmitted_Data.json", "w") as file:
+    file.write(transmitted_data_json)

@@ -1,3 +1,4 @@
+import json
 from cryptography.hazmat.primitives import padding
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives import hmac
@@ -6,7 +7,6 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import padding as asym_padding
 from cryptography.exceptions import InvalidSignature
-
 
 def decrypt_rsa(ciphertext, private_key):
     plaintext = private_key.decrypt(
@@ -53,14 +53,16 @@ with open("alice_public_key.pem", "rb") as key_file:
         backend=default_backend()
     )
 
-# Read transmitted data from file
-with open("Transmitted_Data", "rb") as file:
-    data = file.read()
+# Read transmitted data from JSON file
+with open("Transmitted_Data.json", "r") as file:
+    transmitted_data_json = file.read()
 
-iv = data[:16]
-encrypted_message = data[16:272]  # assuming 256-bit AES key
-encrypted_aes_key = data[272:544]
-mac = data[544:]
+# Parse JSON to get individual components
+transmitted_data = json.loads(transmitted_data_json)
+iv = transmitted_data["iv"]
+encrypted_message = transmitted_data["encrypted_message"]
+encrypted_aes_key = transmitted_data["encrypted_aes_key"]
+mac = transmitted_data["mac"]
 
 # Decrypt AES key using Bob's RSA private key
 aes_key = decrypt_rsa(encrypted_aes_key, bob_private_key)
