@@ -5,6 +5,7 @@ from cryptography.hazmat.backends import default_backend
 from cryptography.hazmat.primitives import serialization, hmac
 from cryptography.hazmat.primitives.asymmetric import padding as asymmetric_padding
 
+# Decrypts a message using AES decryption algorithm with a given AES key and IV
 def decrypt_message_with_aes(encrypted_message, iv, aes_key):
     backend = default_backend()
     cipher = Cipher(algorithms.AES(aes_key), modes.CBC(iv), backend=backend)
@@ -14,6 +15,7 @@ def decrypt_message_with_aes(encrypted_message, iv, aes_key):
     unpadded_message = unpadder.update(decrypted_message) + unpadder.finalize()
     return unpadded_message
 
+# Decrypts an AES key using RSA decryption algorithm with a given RSA private key
 def decrypt_aes_key_with_rsa(encrypted_aes_key, rsa_private_key):
     decrypted_aes_key = rsa_private_key.decrypt(
         encrypted_aes_key,
@@ -25,6 +27,7 @@ def decrypt_aes_key_with_rsa(encrypted_aes_key, rsa_private_key):
     )
     return decrypted_aes_key
 
+# Verifies the integrity and authenticity of data using HMAC
 def verify_hmac(key, data, hmac_tag):
     h = hmac.HMAC(key, hashes.SHA256(), backend=default_backend())
     h.update(data)

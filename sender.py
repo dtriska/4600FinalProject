@@ -5,6 +5,7 @@ from cryptography.hazmat.primitives import serialization, hmac
 from cryptography.hazmat.primitives.asymmetric import padding as asymmetric_padding
 import os
 
+# Encrypts a message using AES encryption algorithm with a given AES key
 def encrypt_message_with_aes(message, aes_key):
     iv = os.urandom(16)  # Initialization Vector
     backend = default_backend()
@@ -15,6 +16,7 @@ def encrypt_message_with_aes(message, aes_key):
     encrypted_message = encryptor.update(padded_message) + encryptor.finalize()
     return encrypted_message, iv
 
+# Encrypts an AES key using RSA encryption algorithm with a given RSA public key
 def encrypt_aes_key_with_rsa(aes_key, rsa_public_key):
     encrypted_aes_key = rsa_public_key.encrypt(
         aes_key,
@@ -26,6 +28,7 @@ def encrypt_aes_key_with_rsa(aes_key, rsa_public_key):
     )
     return encrypted_aes_key
 
+# Generates HMAC for the given data using the specified key
 def generate_hmac(key, data):
     h = hmac.HMAC(key, hashes.SHA256(), backend=default_backend())
     h.update(data)
@@ -59,19 +62,13 @@ h = hmac.HMAC(hmac_key, hashes.SHA256(), backend=default_backend())
 h.update(encrypted_message + iv + encrypted_aes_key)
 hmac_tag = h.finalize()
 
-# print("iv: ", iv)
-# print("Encrypted AES Key: ", encrypted_aes_key)
-# print("HMAC_Tag: ", hmac_tag)
-# print("Encrypted Message: ", encrypted_message)
-
-
-# Write transmitted data to a single file
+# Write transmitted data to Transmitted_Data
 with open("Transmitted_Data.txt", "wb") as file:
     file.write(iv)
     file.write(encrypted_aes_key)
     file.write(encrypted_message)
     file.write(hmac_tag)
-    file.write(hmac_key)  # Write the HMAC key to the file
+    file.write(hmac_key) 
 
 
 
