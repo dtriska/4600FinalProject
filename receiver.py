@@ -30,8 +30,10 @@ def verify_hmac(key, data, hmac_tag):
     h.update(data)
     try:
         h.verify(hmac_tag)
+        print("Verified Signature")
         return True
     except hmac.InvalidSignature:
+        print("Invalid Signature")
         return False
 
 with open("private_key.pem", "rb") as private_key_file:
