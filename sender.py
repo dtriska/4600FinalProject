@@ -64,21 +64,30 @@ print("Encrypted AES Key: ", encrypted_aes_key)
 print("HMAC_Tag: ", hmac_tag)
 print("Encrypted Message: ", encrypted_message)
 
-# Write transmitted data to separate files
-with open("Transmitted_IV.txt", "wb") as file:
+# # Write transmitted data to separate files
+# with open("Transmitted_IV.txt", "wb") as file:
+#     file.write(iv)
+
+# with open("Transmitted_Encrypted_AES_Key.txt", "wb") as file:
+#     file.write(encrypted_aes_key)
+
+# with open("Transmitted_Encrypted_Message.txt", "wb") as file:
+#     file.write(encrypted_message)
+
+# with open("Transmitted_HMAC_Tag.txt", "wb") as file:
+#     file.write(hmac_tag)
+
+# with open("Transmitted_HMAC_Key.txt", "wb") as file:
+#     file.write(hmac_key)  # Write the HMAC key to the file
+
+# Write transmitted data to a single file
+with open("Transmitted_Data.txt", "wb") as file:
     file.write(iv)
-
-with open("Transmitted_Encrypted_AES_Key.txt", "wb") as file:
     file.write(encrypted_aes_key)
-
-with open("Transmitted_Encrypted_Message.txt", "wb") as file:
     file.write(encrypted_message)
-
-with open("Transmitted_HMAC_Tag.txt", "wb") as file:
     file.write(hmac_tag)
-
-with open("Transmitted_HMAC_Key.txt", "wb") as file:
     file.write(hmac_key)  # Write the HMAC key to the file
+
 
 
 
